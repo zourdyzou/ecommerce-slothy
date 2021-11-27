@@ -3,7 +3,35 @@ import styled from "styled-components";
 import { services } from "../../utils/constants";
 
 export const Services: React.FC = () => {
-  return <h4>services </h4>;
+  return (
+    <Wrapper>
+      <div className="section-center">
+        <article className="header">
+          <h3>
+            custom furniture <br />
+            built with ❤ for you.
+          </h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+            dolore ipsam nesciunt, ullam animi quibusdam magni voluptatem
+            explicabo repudiandae hic.
+          </p>
+        </article>
+        <div className="services-center">
+          {services.map((service) => {
+            const { icon, id, text, title } = service;
+            return (
+              <article className="service" key={id}>
+                <span className="icon">{icon}</span>
+                <h4>{title}</h4>
+                <p>{text}</p>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
