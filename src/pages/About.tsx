@@ -5,7 +5,32 @@ import { PageHero } from "../components";
 import aboutImg from "../assets/hero-bcg.jpeg";
 
 export const AboutPage: React.FC = () => {
-  return <h4>about page</h4>;
+  return (
+    <main>
+      <PageHero title="about" />
+      <Wrapper className="page section section-center">
+        <img
+          loading="lazy"
+          src={aboutImg}
+          alt="hero about the comfyslothy, there is a desk too"
+        />
+        <article>
+          <div className="title">
+            <h2>our story.</h2>
+            <div className="underline" />
+          </div>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            itaque dolores vitae officiis dignissimos beatae nostrum aperiam?
+            Cum perferendis, ad fugiat porro unde necessitatibus laboriosam
+            voluptates hic quam! Deserunt, ad. Lorem ipsum dolor, sit amet
+            consectetur adipisicing elit. Accusantium modi quam magnam hic
+            necessitatibus.
+          </p>
+        </article>
+      </Wrapper>
+    </main>
+  );
 };
 
 const Wrapper = styled.section`

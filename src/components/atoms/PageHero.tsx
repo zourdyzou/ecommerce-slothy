@@ -1,9 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { home } from "../../utils/routes";
 
-export const PageHero: React.FC = () => {
-  return <h4>page hero</h4>;
+interface Props {
+  title: string;
+}
+
+export const PageHero: React.FC<Props> = ({ title }) => {
+  return (
+    <Wrapper>
+      <div className="section-center">
+        <h3>
+          <Link to={home}>home</Link> / {title}
+        </h3>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
