@@ -3,7 +3,10 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 
-import logo from "../assets/logo.svg";
+import logo from "../../assets/logo.svg";
+
+import * as routes from "../../utils/routes";
+
 import { links } from "../../utils/constants";
 import { useProductsContext } from "../../context/products_context";
 
@@ -11,10 +14,33 @@ import { CartButtons } from "../atoms/CartButtons";
 import { useUserContext } from "../../context/user_context";
 
 export const Navbar: React.FC = () => {
-  return <h4>navbar</h4>;
+  return (
+    <Container>
+      <div className="nav-center">
+        <div className="nav-header">
+          <Link to={routes.home}>
+            <img src={logo} alt="logo-container profile-company" />
+          </Link>
+          <button type="button" className="nav-toggle">
+            <FaBars />
+          </button>
+        </div>
+        {/* nav-links */}
+        <ul className="nav-links">
+          {links.map((link) => {
+            return (
+              <li key={link.id}>
+                <Link to={link.url}>{link.text}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </Container>
+  );
 };
 
-const NavContainer = styled.nav`
+const Container = styled.nav`
   height: 5rem;
   display: flex;
   align-items: center;

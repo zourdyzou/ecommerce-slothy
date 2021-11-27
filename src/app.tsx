@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Switch, Route } from "react-router-dom";
+import { Footer, Navbar, Sidebar } from "./components";
 import { AboutPage } from "./pages/About";
 import { CartPage } from "./pages/Cart";
 import { CheckoutPage } from "./pages/Checkout";
@@ -15,6 +16,8 @@ import * as routes from "./utils/routes";
 export const App: React.FC = () => {
   return (
     <>
+      <Navbar />
+      <Sidebar />
       <Switch>
         <Route exact path={routes.home} component={HomePage} />
         <Route exact path={routes.about} component={AboutPage} />
@@ -28,6 +31,7 @@ export const App: React.FC = () => {
         <Route exact path={routes.checkout} component={CheckoutPage} />
         <Route exact path={routes.error} component={ErrorPage} />
       </Switch>
+      <Footer />
     </>
   );
 };
