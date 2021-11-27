@@ -35,6 +35,7 @@ export const Navbar: React.FC = () => {
             );
           })}
         </ul>
+        <CartButtons />
       </div>
     </Container>
   );

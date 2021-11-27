@@ -2,7 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 export const Footer: React.FC = () => {
-  return <h4>footer</h4>;
+  return (
+    <Wrapper>
+      <h5>
+        &copy; 2021
+        <span> ComfySloth</span>
+      </h5>
+      <h5>All rights reserved.</h5>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.footer`

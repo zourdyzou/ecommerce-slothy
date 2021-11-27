@@ -9,7 +9,20 @@ import { useUserContext } from "../../context/user_context";
 import { useProductsContext } from "../../context/products_context";
 
 export const CartButtons: React.FC = () => {
-  return <h4>cart buttons </h4>;
+  return (
+    <Wrapper className="cart-btn-wrapper">
+      <Link to={"/cart"} className="cart-btn">
+        cart
+        <span className="cart-container">
+          <FaShoppingCart />
+          <span className="cart-value">12</span>
+        </span>
+      </Link>
+      <button type="button" className="auth-btn">
+        login <FaUserPlus />
+      </button>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.div`
