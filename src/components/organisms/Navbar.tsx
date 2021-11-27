@@ -14,6 +14,8 @@ import { CartButtons } from "../atoms/CartButtons";
 import { useUserContext } from "../../context/user_context";
 
 export const Navbar: React.FC = () => {
+  const { sidebarOpen }: any = useProductsContext();
+
   return (
     <Container>
       <div className="nav-center">
@@ -21,7 +23,7 @@ export const Navbar: React.FC = () => {
           <Link to={routes.home}>
             <img src={logo} alt="logo-container profile-company" />
           </Link>
-          <button type="button" className="nav-toggle">
+          <button type="button" className="nav-toggle" onClick={sidebarOpen}>
             <FaBars />
           </button>
         </div>

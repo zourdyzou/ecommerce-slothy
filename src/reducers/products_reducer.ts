@@ -12,6 +12,24 @@ interface State {
   single_product: SingleProduct | any;
 }
 
+interface OpenSidebar {
+  type: ActionTypes.SIDEBAR_OPEN;
+}
+
+interface CloseSidebar {
+  type: ActionTypes.SIDEBAR_CLOSE;
+}
+
+interface GetProducts {
+  type: ActionTypes.GET_PRODUCTS_BEGIN;
+}
+
+interface GetProductsError {
+  type: ActionTypes.GET_PRODUCTS_ERROR;
+}
+
+type Actions = CloseSidebar | OpenSidebar | GetProducts | GetProductsError;
+
 const initialState = {
   isSidebarOpen: false,
   products_loading: false,
@@ -23,9 +41,30 @@ const initialState = {
   single_product: {},
 };
 
-const products_reducer = (state: State = initialState, action: any) => {
-  return state;
-  // throw new Error(`No Matching "${action.type}" - action type`)
+const products_reducer = (state: State = initialState, action: Actions) => {
+  switch (action.type) {
+    case ActionTypes.SIDEBAR_OPEN:
+      return {
+        ...state,
+        isSidebarOpen: true,
+      };
+    case ActionTypes.SIDEBAR_CLOSE:
+      return {
+        ...state,
+        isSidebarOpen: false,
+      };
+
+    case ActionTypes.GET_PRODUCTS_BEGIN:
+      return {
+        ...state,
+        products_loading: true,
+      };
+
+    default:
+      return state;
+  }
 };
+
+// throw new Error(`No Matching "${action.type}" - action type`)
 
 export default products_reducer;

@@ -9,9 +9,11 @@ import { useUserContext } from "../../context/user_context";
 import { useProductsContext } from "../../context/products_context";
 
 export const CartButtons: React.FC = () => {
+  const { sidebarClose }: any = useProductsContext();
+
   return (
     <Wrapper className="cart-btn-wrapper">
-      <Link to={"/cart"} className="cart-btn">
+      <Link to={"/cart"} className="cart-btn" onClick={sidebarClose}>
         cart
         <span className="cart-container">
           <FaShoppingCart />
