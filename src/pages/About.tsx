@@ -20,12 +20,13 @@ export const AboutPage: React.FC = () => {
             <div className="underline" />
           </div>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            itaque dolores vitae officiis dignissimos beatae nostrum aperiam?
-            Cum perferendis, ad fugiat porro unde necessitatibus laboriosam
-            voluptates hic quam! Deserunt, ad. Lorem ipsum dolor, sit amet
-            consectetur adipisicing elit. Accusantium modi quam magnam hic
-            necessitatibus.
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Vel
+            aspernatur est consequuntur voluptas ea tempore tenetur accusantium
+            ullam laborum magnam, dolor officiis deserunt hic asperiores porro
+            quam, nulla delectus deleniti! Suscipit excepturi nisi cumque nemo
+            eos. Ea repudiandae iusto accusantium illo sunt repellendus harum,
+            incidunt, dolorem consequatur debitis labore provident a quibusdam!
+            Molestiae, nulla cum.
           </p>
         </article>
       </Wrapper>
