@@ -1,8 +1,37 @@
 import React from "react";
 import styled from "styled-components";
 
+const form_spree = "mqknzbpo";
+
 export const Contact: React.FC = () => {
-  return <h4>contact section</h4>;
+  return (
+    <Wrapper>
+      <div className="section-center">
+        <h3>Join our newsletter and get 20% off!</h3>
+        <div className="content">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
+            molestiae voluptatem quia minus velit magni!
+          </p>
+          <form
+            className="contact-form"
+            action={`https://formspree.io/f/${form_spree}`}
+            method="POST"
+          >
+            <input
+              type="email"
+              className="form-input"
+              placeholder="enter your email"
+              name="_replyto"
+            />
+            <button type="submit" className="submit-btn">
+              subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
