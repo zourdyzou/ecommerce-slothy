@@ -5,9 +5,36 @@ import styled from "styled-components";
 import { Error } from "../atoms/Error";
 import { Loading } from "../atoms/Loading";
 import { Product } from "../molecules/Product";
+import { ProductData } from "../../types/data-types";
 
 export const FeaturedProducts: React.FC = () => {
-  return <h4>featured products</h4>;
+  const {
+    products_loading: loading,
+    products_error: error,
+    featured_products: featured,
+  }: any = useProductsContext();
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
+
+  return (
+    <Wrapper className="section">
+      <div className="title">
+        <h2>featured furniture.</h2>
+        <div className="underline"></div>
+      </div>
+      <div className="section-center featured">
+        {featured.map((product: ProductData) => {
+          return <Product key={product.id} {...product} />;
+        })}
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`

@@ -28,7 +28,22 @@ interface GetProductsError {
   type: ActionTypes.GET_PRODUCTS_ERROR;
 }
 
-type Actions = CloseSidebar | OpenSidebar | GetProducts | GetProductsError;
+interface GetProductsData {
+  type: ActionTypes.GET_PRODUCTS_SUCCESS;
+  payload: ProductData[];
+}
+
+interface GetProductsError {
+  type: ActionTypes.GET_PRODUCTS_ERROR;
+}
+
+type Actions =
+  | CloseSidebar
+  | OpenSidebar
+  | GetProducts
+  | GetProductsError
+  | GetProductsData
+  | GetProductsError;
 
 const initialState = {
   isSidebarOpen: false,
@@ -58,6 +73,24 @@ const products_reducer = (state: State = initialState, action: Actions) => {
       return {
         ...state,
         products_loading: true,
+      };
+
+    case ActionTypes.GET_PRODUCTS_SUCCESS:
+      const featured_products = action.payload.filter(
+        (product) => product.featured === true
+      );
+      return {
+        ...state,
+        products_loading: false,
+        products: action.payload,
+        featured_products,
+      };
+
+    case ActionTypes.GET_PRODUCTS_ERROR:
+      return {
+        ...state,
+        products_loading: false,
+        products_error: true,
       };
 
     default:

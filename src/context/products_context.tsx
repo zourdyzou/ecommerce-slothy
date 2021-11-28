@@ -1,7 +1,13 @@
 import axios from "axios";
-import React, { ReactNode, useContext, useEffect, useReducer } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import reducer from "../reducers/products_reducer";
-import { products_url as url } from "../utils/constants";
+import { products_url } from "../utils/constants";
 import { ActionTypes } from "../types/action-types";
 
 const initialState = {
@@ -35,6 +41,38 @@ export const ProductProvider = ({ children }: Props): JSX.Element => {
       type: ActionTypes.SIDEBAR_OPEN,
     });
   };
+
+  const fetchProducts = useCallback(async (url: string) => {
+    try {
+      productDispatch({ type: ActionTypes.GET_PRODUCTS_BEGIN });
+
+      const response = await axios.get(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status >= 300) {
+        throw new Error("something is wrong with your connection!");
+      }
+
+      if (Object.keys(response.data).length > 0) {
+        productDispatch({
+          type: ActionTypes.GET_PRODUCTS_SUCCESS,
+          payload: response.data,
+        });
+
+        console.log(response.data);
+      }
+    } catch (error: TypeError | any) {
+      productDispatch({ type: ActionTypes.GET_PRODUCTS_ERROR });
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchProducts(products_url);
+  }, [fetchProducts]);
 
   return (
     <ProductsContext.Provider

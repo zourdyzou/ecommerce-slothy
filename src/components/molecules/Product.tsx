@@ -4,8 +4,28 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { formatPrice } from "../../utils/helpers";
 
-export const Product: React.FC = () => {
-  return <h4>product</h4>;
+interface Props {
+  image: string;
+  name: string;
+  price: number;
+  id: string;
+}
+
+export const Product: React.FC<Props> = ({ image, name, id, price }) => {
+  return (
+    <Wrapper>
+      <div className="container">
+        <img src={image} alt={name} />
+        <Link to={`/products/${id}`} className="link">
+          <FaSearch />
+        </Link>
+      </div>
+      <article>
+        <h5>{name}</h5>
+        <p>{formatPrice(price)}</p>
+      </article>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.article`
@@ -47,19 +67,19 @@ const Wrapper = styled.article`
   .container:hover .link {
     opacity: 1;
   }
-  footer {
+  article {
     margin-top: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  footer h5,
-  footer p {
+  article h5,
+  article p {
     margin-bottom: 0;
     font-weight: 400;
   }
 
-  footer p {
+  article p {
     color: var(--clr-primary-5);
     letter-spacing: var(--spacing);
   }

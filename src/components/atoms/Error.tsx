@@ -1,5 +1,9 @@
 import React from "react";
 
 export const Error: React.FC = () => {
-  return <h4>error element</h4>;
+  return (
+    <div className="section section-center text-center">
+      <h2>there was an error</h2>
+    </div>
+  );
 };

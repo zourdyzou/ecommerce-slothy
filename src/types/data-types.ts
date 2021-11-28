@@ -8,6 +8,7 @@ export interface ProductData {
   description: string;
   category: string;
   shipping: boolean;
+  featured: boolean;
 }
 
 export interface ImageData {
