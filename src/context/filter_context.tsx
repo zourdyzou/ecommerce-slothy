@@ -35,11 +35,40 @@ export const FilterProvider = ({ children }: Props): JSX.Element => {
     filterDispatch({ type: ActionTypes.LOAD_PRODUCTS, payload: products });
   }, [products]);
 
+  useEffect(() => {
+    filterDispatch({
+      type: ActionTypes.SORT_PRODUCTS,
+    });
+  }, [products, filterState?.sort]);
+
+  const setGridView = () => {
+    filterDispatch({
+      type: ActionTypes.SET_GRIDVIEW,
+    });
+  };
+
+  const setListView = () => {
+    filterDispatch({
+      type: ActionTypes.SET_LISTVIEW,
+    });
+  };
+
+  const updateSort = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    filterDispatch({
+      type: ActionTypes.UPDATE_SORT,
+      payload: value,
+    });
+  };
+
   return (
     <FilterContext.Provider
       value={{
         ...filterState,
         filterDispatch,
+        setGridView,
+        setListView,
+        updateSort,
       }}
     >
       {children}

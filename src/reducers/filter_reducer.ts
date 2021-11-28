@@ -31,7 +31,16 @@ interface LoadProducts {
   payload: Array<ProductData>;
 }
 
-type Actions = GridView | ListView | LoadProducts;
+interface UpdateSort {
+  type: ActionTypes.UPDATE_SORT;
+  payload: string;
+}
+
+interface SortProducts {
+  type: ActionTypes.SORT_PRODUCTS;
+}
+
+type Actions = GridView | ListView | LoadProducts | UpdateSort | SortProducts;
 
 const initialState = {
   filtered_products: [],
@@ -74,8 +83,40 @@ const filter_reducer = (state: State = initialState, action: Actions) => {
         grid_view: false,
       };
 
+    case ActionTypes.UPDATE_SORT:
+      return { ...state, sort: action.payload };
+
+    case ActionTypes.SORT_PRODUCTS:
+      const { sort, filtered_products } = state;
+      let tempProducts = [...filtered_products];
+
+      if (sort === "price-lowest") {
+        tempProducts = tempProducts.sort((a, b) => {
+          return a.price - b.price;
+        });
+      }
+
+      if (sort === "price-highest") {
+        tempProducts = tempProducts.sort((a, b) => {
+          return b.price - a.price;
+        });
+      }
+
+      if (sort === "name-a") {
+        tempProducts = tempProducts.sort((a, b) => {
+          return a.name.localeCompare(b.name);
+        });
+      }
+
+      if (sort === "name-z") {
+        tempProducts = tempProducts.sort((a, b) => {
+          return b.name.localeCompare(a.name);
+        });
+      }
+
+      return { ...state, filtered_products: tempProducts };
+
     default:
-      return state;
   }
 };
 
