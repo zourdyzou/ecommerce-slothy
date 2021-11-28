@@ -70,6 +70,32 @@ export const ProductProvider = ({ children }: Props): JSX.Element => {
     }
   }, []);
 
+  const fetchSingleProduct = useCallback(async (url: string) => {
+    try {
+      productDispatch({ type: ActionTypes.GET_SINGLE_PRODUCT_BEGIN });
+
+      const response = await axios.get(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status >= 300) {
+        throw new Error("something is wrong with your connection!");
+      }
+
+      if (Object.keys(response.data).length > 0) {
+        productDispatch({
+          type: ActionTypes.GET_SINGLE_PRODUCT_SUCCESS,
+          payload: response.data,
+        });
+      }
+    } catch (error: TypeError | any) {
+      productDispatch({ type: ActionTypes.GET_SINGLE_PRODUCT_ERROR });
+    }
+  }, []);
+
   useEffect(() => {
     fetchProducts(products_url);
   }, [fetchProducts]);
@@ -81,6 +107,7 @@ export const ProductProvider = ({ children }: Props): JSX.Element => {
         productDispatch,
         sidebarClose,
         sidebarOpen,
+        fetchSingleProduct,
       }}
     >
       {children}

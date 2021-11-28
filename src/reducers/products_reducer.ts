@@ -33,8 +33,21 @@ interface GetProductsData {
   payload: ProductData[];
 }
 
+interface GetSingleProductData {
+  type: ActionTypes.GET_SINGLE_PRODUCT_SUCCESS;
+  payload: SingleProduct;
+}
+
+interface GetSingleProductLoading {
+  type: ActionTypes.GET_SINGLE_PRODUCT_BEGIN;
+}
+
 interface GetProductsError {
   type: ActionTypes.GET_PRODUCTS_ERROR;
+}
+
+interface GetSingleProductError {
+  type: ActionTypes.GET_SINGLE_PRODUCT_ERROR;
 }
 
 type Actions =
@@ -43,7 +56,10 @@ type Actions =
   | GetProducts
   | GetProductsError
   | GetProductsData
-  | GetProductsError;
+  | GetProductsError
+  | GetSingleProductData
+  | GetSingleProductError
+  | GetSingleProductLoading;
 
 const initialState = {
   isSidebarOpen: false,
@@ -91,6 +107,27 @@ const products_reducer = (state: State = initialState, action: Actions) => {
         ...state,
         products_loading: false,
         products_error: true,
+      };
+
+    case ActionTypes.GET_SINGLE_PRODUCT_BEGIN:
+      return {
+        ...state,
+        single_product_loading: true,
+        single_product_error: false,
+      };
+
+    case ActionTypes.GET_SINGLE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        single_product_loading: false,
+        single_product: action.payload,
+      };
+
+    case ActionTypes.GET_SINGLE_PRODUCT_ERROR:
+      return {
+        ...state,
+        single_product_loading: false,
+        single_product_error: true,
       };
 
     default:
