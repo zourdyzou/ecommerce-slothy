@@ -2,8 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import { Filter, ProductList, Sort, PageHero } from "../components";
 
-export const ProductsPage = () => {
-  return <h4>products page</h4>;
+export const ProductsPage: React.FC = () => {
+  return (
+    <main>
+      <PageHero title="products" />
+      <Wrapper className="page">
+        <div className="section-center products">
+          <Filter />
+          <div>
+            <Sort />
+            <ProductList />
+          </div>
+        </div>
+      </Wrapper>
+    </main>
+  );
 };
 
 const Wrapper = styled.div`

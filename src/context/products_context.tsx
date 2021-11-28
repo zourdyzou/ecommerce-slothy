@@ -62,8 +62,6 @@ export const ProductProvider = ({ children }: Props): JSX.Element => {
           type: ActionTypes.GET_PRODUCTS_SUCCESS,
           payload: response.data,
         });
-
-        console.log(response.data);
       }
     } catch (error: TypeError | any) {
       productDispatch({ type: ActionTypes.GET_PRODUCTS_ERROR });

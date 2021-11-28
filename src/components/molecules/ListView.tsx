@@ -3,9 +3,33 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import { formatPrice } from "../../utils/helpers";
+import { ProductData } from "../../types/data-types";
 
-export const ListView: React.FC = () => {
-  return <h4>list view</h4>;
+interface Props {
+  products: ProductData[];
+}
+
+export const ListView: React.FC<Props> = ({ products }) => {
+  return (
+    <Wrapper>
+      {products.map((product) => {
+        const { id, image, name, price, description } = product;
+        return (
+          <article key={id}>
+            <img src={image} alt={name} />
+            <div>
+              <h4>{name}</h4>
+              <h5 className="price">{formatPrice(price)}</h5>
+              <p>{description.substring(0, 180)}...</p>
+              <Link to={`/products/${id}`} className="btn">
+                view product
+              </Link>
+            </div>
+          </article>
+        );
+      })}
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`

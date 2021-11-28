@@ -14,7 +14,8 @@ export const PageHero: React.FC<Props> = ({ title, product }) => {
       <div className="section-center">
         <h3>
           <Link to={home}>home</Link> /{" "}
-          {product ? <Link to="/products">products </Link> : null} / {title}
+          {product ? <Link to="/products">products /</Link> : null}
+          {title}
         </h3>
       </div>
     </Wrapper>

@@ -8,7 +8,7 @@ import { CheckoutPage } from "./pages/Checkout";
 import { ErrorPage } from "./pages/Error";
 
 import { HomePage } from "./pages/Home";
-import { ProductsPage } from "./pages/Products";
+import { ProductsPage } from "./pages/ProductsPage";
 import { SingleProductPage } from "./pages/SingleProduct";
 
 import * as routes from "./utils/routes";

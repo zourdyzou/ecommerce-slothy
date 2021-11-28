@@ -18,10 +18,25 @@ interface State {
   };
 }
 
+interface GridView {
+  type: ActionTypes.SET_GRIDVIEW;
+}
+
+interface ListView {
+  type: ActionTypes.SET_LISTVIEW;
+}
+
+interface LoadProducts {
+  type: ActionTypes.LOAD_PRODUCTS;
+  payload: Array<ProductData>;
+}
+
+type Actions = GridView | ListView | LoadProducts;
+
 const initialState = {
   filtered_products: [],
   all_products: [],
-  grid_view: true,
+  grid_view: false,
   sort: "price-lowest",
   filters: {
     text: "",
@@ -35,9 +50,33 @@ const initialState = {
   },
 };
 
-const filter_reducer = (state: State = initialState, action: any) => {
-  return state;
-  // throw new Error(`No Matching "${action.type}" - action type`)
+const filter_reducer = (state: State = initialState, action: Actions) => {
+  switch (action.type) {
+    case ActionTypes.LOAD_PRODUCTS:
+      let maxPrice: number[] | number = action.payload.map((p) => p.price);
+      maxPrice = Math.max(...maxPrice);
+      return {
+        ...state,
+        all_products: [...action.payload],
+        filtered_products: [...action.payload],
+        filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
+      };
+
+    case ActionTypes.SET_GRIDVIEW:
+      return {
+        ...state,
+        grid_view: true,
+      };
+
+    case ActionTypes.SET_LISTVIEW:
+      return {
+        ...state,
+        grid_view: false,
+      };
+
+    default:
+      return state;
+  }
 };
 
 export default filter_reducer;
