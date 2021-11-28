@@ -5,14 +5,16 @@ import { home } from "../../utils/routes";
 
 interface Props {
   title: string;
+  product?: boolean;
 }
 
-export const PageHero: React.FC<Props> = ({ title }) => {
+export const PageHero: React.FC<Props> = ({ title, product }) => {
   return (
     <Wrapper>
       <div className="section-center">
         <h3>
-          <Link to={home}>home</Link> / {title}
+          <Link to={home}>home</Link> /{" "}
+          {product ? <Link to="/products">products </Link> : null} / {title}
         </h3>
       </div>
     </Wrapper>

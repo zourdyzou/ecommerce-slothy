@@ -1,8 +1,32 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { ImageData } from "../../types/data-types";
 
-export const ProductImages: React.FC = () => {
-  return <h4>product images</h4>;
+interface Props {
+  images: Array<ImageData>;
+}
+
+export const ProductImages: React.FC<Props> = ({ images }) => {
+  const [main, setMain] = useState(images[0]);
+
+  return (
+    <Wrapper>
+      <img src={main.url} alt={main.filename} className="main" />
+      <div className="gallery">
+        {images.map((image: ImageData, index: number) => {
+          return (
+            <img
+              src={image.url}
+              alt={image.filename}
+              key={index}
+              className={`${image.url === main.url ? "active" : null}`}
+              onClick={() => setMain(images[index])}
+            />
+          );
+        })}
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
