@@ -6,14 +6,16 @@ interface Props {
   images: Array<ImageData>;
 }
 
-export const ProductImages: React.FC<Props> = ({ images }) => {
+export const ProductImages: React.FC<Props> = ({
+  images = [{ url: "", filename: "" }],
+}) => {
   const [main, setMain] = useState(images[0]);
 
   return (
     <Wrapper>
       <img src={main.url} alt={main.filename} className="main" />
       <div className="gallery">
-        {images.map((image: ImageData, index: number) => {
+        {images.map((image, index: number) => {
           return (
             <img
               src={image.url}

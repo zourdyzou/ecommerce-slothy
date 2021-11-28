@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { SingleProduct } from "../types/data-types";
 import { products } from "../utils/routes";
 
-export const SingleProductPage = () => {
+export const SingleProductPage: React.FC = () => {
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const {
@@ -72,7 +72,7 @@ export const SingleProductPage = () => {
           <ProductImages images={images} />
           <section className="content">
             <h2>{name}</h2>
-            <Stars />
+            <Stars stars={stars} reviews={reviews} />
             <h5 className="price">{formatPrice(price)}</h5>
             <p className="desc">{description}</p>
             <p className="info">
@@ -88,7 +88,7 @@ export const SingleProductPage = () => {
               {company}
             </p>
             <hr />
-            {stock > 0 ? <AddToCart /> : null}
+            {stock > 0 ? <AddToCart product={product} /> : null}
           </section>
         </div>
       </div>

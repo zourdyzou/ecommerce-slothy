@@ -6,9 +6,78 @@ import { FaCheck } from "react-icons/fa";
 import { useCartContext } from "../../context/cart_context";
 
 import { AmountButtons } from "./AmountButtons";
+import { SingleProduct } from "../../types/data-types";
+import { cart } from "../../utils/routes";
 
-export const AddToCart: React.FC = () => {
-  return <h4>addToCart </h4>;
+interface Props {
+  product: SingleProduct;
+}
+
+export const AddToCart: React.FC<Props> = ({ product }) => {
+  const { id, stock, colors } = product;
+  const [mainColour, setMainColour] = useState(colors[0]);
+  const [amount, setAmount] = useState<number>(1);
+
+  const increase = () => {
+    setAmount((prevAmount) => {
+      let tempAmount = prevAmount + 1;
+
+      if (tempAmount > stock) {
+        tempAmount = stock;
+      }
+
+      return tempAmount;
+    });
+  };
+
+  const decrease = () => {
+    setAmount((prevAmount) => {
+      let tempAmount = prevAmount - 1;
+
+      if (tempAmount < 1) {
+        tempAmount = 1;
+      }
+
+      return tempAmount;
+    });
+  };
+
+  return (
+    <Wrapper>
+      <div className="colors">
+        <span>colors : </span>
+        <div>
+          {colors.map((colour, index: number) => {
+            return (
+              <button
+                key={index}
+                style={{
+                  background: colour,
+                }}
+                className={`${
+                  mainColour === colour ? "color-btn active" : "color-btn"
+                }`}
+                onClick={() => setMainColour(colors[index])}
+              >
+                {mainColour === colour ? <FaCheck /> : null}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="btn-container">
+        <AmountButtons
+          amount={amount}
+          increase={increase}
+          decrease={decrease}
+        />
+        <Link to={cart} className="btn">
+          add to cart
+        </Link>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`
