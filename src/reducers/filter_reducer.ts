@@ -18,29 +18,34 @@ interface State {
   };
 }
 
-interface GridView {
+interface IGridView {
   type: ActionTypes.SET_GRIDVIEW;
 }
 
-interface ListView {
+interface IListView {
   type: ActionTypes.SET_LISTVIEW;
 }
 
-interface LoadProducts {
+interface ILoadProducts {
   type: ActionTypes.LOAD_PRODUCTS;
   payload: Array<ProductData>;
 }
 
-interface UpdateSort {
+interface IUpdateSort {
   type: ActionTypes.UPDATE_SORT;
   payload: string;
 }
 
-interface SortProducts {
+interface ISortProducts {
   type: ActionTypes.SORT_PRODUCTS;
 }
 
-type Actions = GridView | ListView | LoadProducts | UpdateSort | SortProducts;
+type Actions =
+  | IGridView
+  | IListView
+  | ILoadProducts
+  | IUpdateSort
+  | ISortProducts;
 
 const initialState = {
   filtered_products: [],
