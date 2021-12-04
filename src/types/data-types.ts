@@ -52,3 +52,14 @@ export interface SingleProduct {
   shipping: boolean;
   images: Array<ImageData>;
 }
+
+export interface IFilters {
+  text: string;
+  company: string;
+  category: string;
+  color: string;
+  min_price: number;
+  max_price: number;
+  price: number;
+  shipping: boolean;
+}

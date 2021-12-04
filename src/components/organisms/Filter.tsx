@@ -1,11 +1,46 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "styled-components";
 import { FaCheck } from "react-icons/fa";
 import { useFilterContext } from "../../context/filter_context";
-import { getUniqueValues, formatPrice } from "../../utils/helpers";
+import { useGetUniqueValues, formatPrice } from "../../utils/helpers";
+import { IFilters } from "../../types/data-types";
+import { debounce } from "lodash";
 
 export const Filter: React.FC = () => {
-  return <h4>filters</h4>;
+  const { filters, updateFilters, all_products, clearFilters }: any =
+    useFilterContext();
+
+  const {
+    text,
+    category,
+    color,
+    company,
+    max_price,
+    min_price,
+    price,
+    shipping,
+  }: IFilters = filters;
+
+  return (
+    <Wrapper>
+      <div className="content">
+        <form onSubmit={(e) => e.preventDefault()}>
+          {/* ---- search input ---- */}
+          <div className="form-control">
+            <input
+              type="text"
+              name="text"
+              value={text}
+              placeholder="search"
+              onChange={updateFilters}
+              className="search-input"
+            />
+          </div>
+          {/* ---- end of search input ---- */}
+        </form>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`

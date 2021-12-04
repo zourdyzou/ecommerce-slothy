@@ -1,21 +1,12 @@
 import { ActionTypes } from "../types/action-types";
-import { ProductData } from "../types/data-types";
+import { IFilters, ProductData } from "../types/data-types";
 
 interface State {
   filtered_products: Array<ProductData>;
   all_products: Array<ProductData>;
   grid_view: boolean;
   sort: string;
-  filters: {
-    text: string;
-    company: string;
-    category: string;
-    color: string;
-    min_price: number;
-    max_price: number;
-    price: number;
-    shipping: boolean;
-  };
+  filters: IFilters;
 }
 
 interface IGridView {
@@ -40,12 +31,26 @@ interface ISortProducts {
   type: ActionTypes.SORT_PRODUCTS;
 }
 
+interface IUpdateFilters {
+  type: ActionTypes.UPDATE_FILTERS;
+  payload: {
+    name: string;
+    value: string;
+  };
+}
+
+interface IClearFilters {
+  type: ActionTypes.CLEAR_FILTERS;
+}
+
 type Actions =
   | IGridView
   | IListView
   | ILoadProducts
   | IUpdateSort
-  | ISortProducts;
+  | ISortProducts
+  | IUpdateFilters
+  | IClearFilters;
 
 const initialState = {
   filtered_products: [],
@@ -67,13 +72,24 @@ const initialState = {
 const filter_reducer = (state: State = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypes.LOAD_PRODUCTS:
+      /**
+       * When the product loads we need a range of price in order to
+       * place it inside filter component => price_range
+       *
+       * @date 2021-12-04
+       * @returns {max_price => number}
+       */
       let maxPrice: number[] | number = action.payload.map((p) => p.price);
       maxPrice = Math.max(...maxPrice);
       return {
         ...state,
         all_products: [...action.payload],
         filtered_products: [...action.payload],
-        filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
+        filters: Object.assign(
+          {},
+          { ...state.filters },
+          { max_price: maxPrice, price: maxPrice }
+        ),
       };
 
     case ActionTypes.SET_GRIDVIEW:
@@ -119,9 +135,39 @@ const filter_reducer = (state: State = initialState, action: Actions) => {
         });
       }
 
-      return { ...state, filtered_products: tempProducts };
+      return Object.assign(
+        {},
+        { ...state },
+        { filtered_products: tempProducts }
+      );
+
+    case ActionTypes.UPDATE_FILTERS:
+      const { name, value } = action.payload;
+
+      return {
+        ...state,
+        filters: Object.assign({}, { ...state.filters }, { [name]: value }),
+      };
+
+    case ActionTypes.CLEAR_FILTERS:
+      return Object.assign(
+        {},
+        { ...state },
+        {
+          filters: {
+            ...state.filters,
+            text: "",
+            company: "all",
+            category: "all",
+            color: "all",
+            price: state.filters.max_price,
+            shipping: false,
+          },
+        }
+      );
 
     default:
+      return state;
   }
 };
 

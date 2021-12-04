@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useReducer, ReactNode } from "react";
 import reducer from "../reducers/filter_reducer";
 import { ActionTypes } from "../types/action-types";
-
 import { useProductsContext } from "./products_context";
 
 const initialState = {
@@ -61,6 +60,42 @@ export const FilterProvider = ({ children }: Props): JSX.Element => {
     });
   };
 
+  const updateFilters = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let name = e.target.name;
+
+    let value: any = e.target.value;
+
+    if (name === "category") {
+      value = e.target.textContent;
+    }
+
+    if (name === "color") {
+      value = e.target.dataset.color;
+    }
+
+    if (name === "price") {
+      value = Number(value);
+    }
+
+    if (name === "shipping") {
+      value = e.target.checked;
+    }
+
+    filterDispatch({
+      type: ActionTypes.UPDATE_FILTERS,
+      payload: {
+        name,
+        value,
+      },
+    });
+  };
+
+  const clearFilters = () => {
+    filterDispatch({
+      type: ActionTypes.CLEAR_FILTERS,
+    });
+  };
+
   return (
     <FilterContext.Provider
       value={{
@@ -69,6 +104,8 @@ export const FilterProvider = ({ children }: Props): JSX.Element => {
         setGridView,
         setListView,
         updateSort,
+        updateFilters,
+        clearFilters,
       }}
     >
       {children}
