@@ -4,7 +4,6 @@ import { FaCheck } from "react-icons/fa";
 import { useFilterContext } from "../../context/filter_context";
 import { useGetUniqueValues, formatPrice } from "../../utils/helpers";
 import { IFilters } from "../../types/data-types";
-import { debounce } from "lodash";
 
 export const Filter: React.FC = () => {
   const { filters, updateFilters, all_products, clearFilters }: any =
@@ -20,6 +19,10 @@ export const Filter: React.FC = () => {
     price,
     shipping,
   }: IFilters = filters;
+
+  const categories = useGetUniqueValues(all_products, "category");
+  const companies = useGetUniqueValues(all_products, "company");
+  const colors = useGetUniqueValues(all_products, "colors");
 
   return (
     <Wrapper>
@@ -37,7 +40,112 @@ export const Filter: React.FC = () => {
             />
           </div>
           {/* ---- end of search input ---- */}
+          {/* ---- categories ---- */}
+          <div className="form-control">
+            <h5>category</h5>
+            <div>
+              {categories.map((c, indx: number) => {
+                return (
+                  <button
+                    onClick={(e) => updateFilters(e)}
+                    key={indx}
+                    type="button"
+                    name="category"
+                    className={category === c.toLowerCase() ? "active" : ""}
+                  >
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {/* ---- end categories ---- */}
+          {/* ---- companies <--> LIST ---- */}
+          <div className="form-control">
+            <h5>company</h5>
+            <select
+              name="company"
+              value={company}
+              onClick={(e) => updateFilters(e)}
+              className="company"
+            >
+              {companies.map((c, indx: number) => {
+                return (
+                  <option key={indx} value={c}>
+                    {c}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {/* ---- end companies <>----<> list ---- */}
+          {/* ---- colors ---- */}
+          <div className="form-control">
+            <h5>colors</h5>
+            <div className="colors">
+              {colors.map((c, indx: number) => {
+                if (c === "all") {
+                  return (
+                    <button
+                      key={indx}
+                      name="color"
+                      onClick={(e) => updateFilters(e)}
+                      data-color="all"
+                      className={color === "all" ? "all-btn active" : "all-btn"}
+                    >
+                      all
+                    </button>
+                  );
+                }
+
+                return (
+                  <button
+                    key={indx}
+                    name="color"
+                    style={{
+                      background: c,
+                    }}
+                    onClick={(e) => updateFilters(e)}
+                    data-color={c}
+                    className={color === c ? "color-btn active" : "color-btn"}
+                  >
+                    {color === c ? <FaCheck /> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {/* ---- end colors ---- */}
+          {/* ---- price ---- */}
+          <div className="form-control">
+            <h5>price</h5>
+            <p className="price">{formatPrice(price)}</p>
+            <input
+              type="range"
+              name="price"
+              min={min_price}
+              max={max_price}
+              value={price}
+              onChange={(e) => updateFilters(e)}
+            />
+          </div>
+          {/* ---- end price ---- */}
+          {/* shipping */}
+          <div className="form-control shipping">
+            <label htmlFor="shipping">free shipping</label>
+            <input
+              type="checkbox"
+              name="shipping"
+              id="shipping"
+              checked={shipping}
+              onChange={(e) => updateFilters(e)}
+            />
+          </div>
+          {/* end of  shipping */}
         </form>
+        <button type="button" className="clear-btn" onClick={clearFilters}>
+          clear filters
+        </button>
       </div>
     </Wrapper>
   );

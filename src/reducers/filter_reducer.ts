@@ -81,31 +81,29 @@ const filter_reducer = (state: State = initialState, action: Actions) => {
        */
       let maxPrice: number[] | number = action.payload.map((p) => p.price);
       maxPrice = Math.max(...maxPrice);
-      return {
-        ...state,
-        all_products: [...action.payload],
-        filtered_products: [...action.payload],
-        filters: Object.assign(
-          {},
-          { ...state.filters },
-          { max_price: maxPrice, price: maxPrice }
-        ),
-      };
+
+      return Object.assign(
+        {},
+        { ...state },
+        {
+          all_products: [...action.payload],
+          filtered_products: [...action.payload],
+          filters: Object.assign(
+            {},
+            { ...state.filters },
+            { max_price: maxPrice, price: maxPrice }
+          ),
+        }
+      );
 
     case ActionTypes.SET_GRIDVIEW:
-      return {
-        ...state,
-        grid_view: true,
-      };
+      return Object.assign({}, { ...state }, { grid_view: true });
 
     case ActionTypes.SET_LISTVIEW:
-      return {
-        ...state,
-        grid_view: false,
-      };
+      return Object.assign({}, { ...state }, { grid_view: false });
 
     case ActionTypes.UPDATE_SORT:
-      return { ...state, sort: action.payload };
+      return Object.assign({}, { ...state }, { sort: action.payload });
 
     case ActionTypes.SORT_PRODUCTS:
       const { sort, filtered_products } = state;
