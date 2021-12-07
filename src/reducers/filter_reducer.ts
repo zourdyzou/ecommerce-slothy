@@ -43,6 +43,10 @@ interface IClearFilters {
   type: ActionTypes.CLEAR_FILTERS;
 }
 
+interface IFilterProducts {
+  type: ActionTypes.FILTER_PRODUCTS;
+}
+
 type Actions =
   | IGridView
   | IListView
@@ -50,7 +54,8 @@ type Actions =
   | IUpdateSort
   | ISortProducts
   | IUpdateFilters
-  | IClearFilters;
+  | IClearFilters
+  | IFilterProducts;
 
 const initialState = {
   filtered_products: [],
@@ -162,6 +167,41 @@ const filter_reducer = (state: State = initialState, action: Actions) => {
             shipping: false,
           },
         }
+      );
+
+    case ActionTypes.FILTER_PRODUCTS:
+      const { all_products } = state;
+      const { text, category, company, color, price, shipping } = state.filters;
+      let temp_filtering_products = [...all_products];
+
+      if (text) {
+        temp_filtering_products = temp_filtering_products.filter((product) => {
+          return product.name.toLowerCase().includes(text.toLowerCase());
+        });
+      }
+
+      if (category !== "all") {
+        temp_filtering_products = temp_filtering_products.filter((product) => {
+          return product.category === category;
+        });
+      }
+
+      if (company !== "all") {
+        temp_filtering_products = temp_filtering_products.filter((product) => {
+          return product.company === company;
+        });
+      }
+
+      if (color !== "all") {
+        temp_filtering_products = temp_filtering_products.filter((product) => {
+          return product.colors.find((c) => c === color);
+        });
+      }
+
+      return Object.assign(
+        {},
+        { ...state },
+        { filtered_products: temp_filtering_products }
       );
 
     default:

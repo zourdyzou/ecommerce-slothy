@@ -38,7 +38,10 @@ export const FilterProvider = ({ children }: Props): JSX.Element => {
     filterDispatch({
       type: ActionTypes.SORT_PRODUCTS,
     });
-  }, [products, filterState?.sort]);
+    filterDispatch({
+      type: ActionTypes.FILTER_PRODUCTS,
+    });
+  }, [filterState?.sort, filterState.filters]);
 
   const setGridView = () => {
     filterDispatch({
