@@ -198,6 +198,18 @@ const filter_reducer = (state: State = initialState, action: Actions) => {
         });
       }
 
+      if (price) {
+        temp_filtering_products = temp_filtering_products.filter(
+          (product) => product.price <= price
+        );
+      }
+
+      if (shipping) {
+        temp_filtering_products = temp_filtering_products.filter(
+          (product) => product.shipping === true
+        );
+      }
+
       return Object.assign(
         {},
         { ...state },

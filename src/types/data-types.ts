@@ -11,6 +11,17 @@ export interface ProductData {
   featured: boolean;
 }
 
+export interface IFilters {
+  text: string;
+  category: string;
+  company: string;
+  color: string;
+  min_price: number;
+  price: number;
+  max_price: number;
+  shipping: boolean;
+}
+
 export interface ImageData {
   id: string;
   width: number;

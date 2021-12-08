@@ -1,22 +1,22 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
 import { FaCheck } from "react-icons/fa";
+import { IFilters } from "../../types/data-types";
 import { useFilterContext } from "../../context/filter_context";
 import { useGetUniqueValues, formatPrice } from "../../utils/helpers";
-import { IFilters } from "../../types/data-types";
 
 export const Filter: React.FC = () => {
-  const { filters, updateFilters, all_products, clearFilters }: any =
+  const { filters, updateFilters, clearFilters, all_products }: any =
     useFilterContext();
 
   const {
     text,
     category,
-    color,
     company,
-    max_price,
+    color,
     min_price,
     price,
+    max_price,
     shipping,
   }: IFilters = filters;
 
@@ -28,29 +28,30 @@ export const Filter: React.FC = () => {
     <Wrapper>
       <div className="content">
         <form onSubmit={(e) => e.preventDefault()}>
-          {/* ---- search input ---- */}
+          {/* search input */}
           <div className="form-control">
             <input
               type="text"
               name="text"
-              value={text}
               placeholder="search"
-              onChange={updateFilters}
               className="search-input"
+              value={text}
+              onChange={(e) => updateFilters(e)}
             />
           </div>
-          {/* ---- end of search input ---- */}
-          {/* ---- categories ---- */}
+          {/* end search input */}
+
+          {/* categories */}
           <div className="form-control">
             <h5>category</h5>
             <div>
               {categories.map((c, indx: number) => {
                 return (
                   <button
-                    onClick={(e) => updateFilters(e)}
                     key={indx}
                     type="button"
                     name="category"
+                    onClick={(e) => updateFilters(e)}
                     className={category === c.toLowerCase() ? "active" : ""}
                   >
                     {c}
@@ -59,27 +60,30 @@ export const Filter: React.FC = () => {
               })}
             </div>
           </div>
-          {/* ---- end categories ---- */}
-          {/* ---- companies <--> LIST ---- */}
+          {/* end categories */}
+
+          {/* companies */}
           <div className="form-control">
             <h5>company</h5>
             <select
               name="company"
+              id="company"
               value={company}
-              onClick={(e) => updateFilters(e)}
               className="company"
+              onChange={(e) => updateFilters(e)}
             >
               {companies.map((c, indx: number) => {
                 return (
-                  <option key={indx} value={c}>
+                  <option value={c} key={indx}>
                     {c}
                   </option>
                 );
               })}
             </select>
           </div>
-          {/* ---- end companies <>----<> list ---- */}
-          {/* ---- colors ---- */}
+          {/* end companies */}
+
+          {/* colors */}
           <div className="form-control">
             <h5>colors</h5>
             <div className="colors">
@@ -89,8 +93,8 @@ export const Filter: React.FC = () => {
                     <button
                       key={indx}
                       name="color"
-                      onClick={(e) => updateFilters(e)}
                       data-color="all"
+                      onChange={(e) => updateFilters(e)}
                       className={color === "all" ? "all-btn active" : "all-btn"}
                     >
                       all
@@ -105,7 +109,7 @@ export const Filter: React.FC = () => {
                     style={{
                       background: c,
                     }}
-                    onClick={(e) => updateFilters(e)}
+                    onChange={(e) => updateFilters(e)}
                     data-color={c}
                     className={color === c ? "color-btn active" : "color-btn"}
                   >
@@ -115,21 +119,24 @@ export const Filter: React.FC = () => {
               })}
             </div>
           </div>
-          {/* ---- end colors ---- */}
-          {/* ---- price ---- */}
+          {/* end colors */}
+
+          {/* price */}
           <div className="form-control">
             <h5>price</h5>
             <p className="price">{formatPrice(price)}</p>
             <input
               type="range"
               name="price"
+              id="price"
+              value={price}
               min={min_price}
               max={max_price}
-              value={price}
               onChange={(e) => updateFilters(e)}
             />
           </div>
-          {/* ---- end price ---- */}
+          {/* end price */}
+
           {/* shipping */}
           <div className="form-control shipping">
             <label htmlFor="shipping">free shipping</label>
@@ -137,11 +144,11 @@ export const Filter: React.FC = () => {
               type="checkbox"
               name="shipping"
               id="shipping"
-              checked={shipping}
               onChange={(e) => updateFilters(e)}
+              checked={shipping}
             />
           </div>
-          {/* end of  shipping */}
+          {/* end of shipping */}
         </form>
         <button type="button" className="clear-btn" onClick={clearFilters}>
           clear filters
@@ -246,6 +253,8 @@ const Wrapper = styled.section`
     .content {
       position: sticky;
       top: 1rem;
+      transform: translateX(0);
+      -moz-transform: translateX(-13%);
     }
   }
 `;
