@@ -1,8 +1,8 @@
 import { ActionTypes } from "../types/action-types";
-import { ProductData, SingleProduct } from "../types/data-types";
+import { SingleProduct, ICartData } from "../types/data-types";
 
 interface State {
-  cart: Array<ProductData>;
+  cart: Array<ICartData>;
   total_items: number;
   total_amount: number;
   shipping_fee: number;
@@ -34,7 +34,29 @@ const cart_reducer = (state: State = initialState, action: Actions) => {
       const tempItem = state.cart.find((i) => i.id === id + color);
 
       if (tempItem) {
-        return Object.assign({}, { ...state }, {});
+        const temp_data_on_cart = state.cart.map((cartItem) => {
+          if (cartItem.id === id + color) {
+            /**
+             * if the cartItem.id (product that already added to cart)
+             * is match with the current (id: id + color)
+             * * it will change the amount of price that user should pay
+             * * and it cannot be greater than the product stock on the market.
+             */
+            let newAmount = cartItem.amount + amount;
+
+            // a guard clause --> the amount cannot be greater than product stock
+            if (newAmount > cartItem.stock_max) {
+              newAmount = cartItem.stock_max;
+            }
+
+            return Object.assign({}, { ...cartItem }, { amount: newAmount });
+          } else {
+            // adding a new product data to the cart, if its not match (id: id + color)
+            return cartItem;
+          }
+        });
+
+        return Object.assign({}, { ...state }, { cart: temp_data_on_cart });
       } else {
         const adding_to_cart = {
           id: id + color,
