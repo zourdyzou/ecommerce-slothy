@@ -14,8 +14,18 @@ interface Props {
   children: React.ReactNode;
 }
 
+export const getDataOnLocalStorage = (type: string) => {
+  const cart = localStorage.getItem(type) || "";
+
+  if (cart.length === 0) {
+    return [];
+  }
+
+  return JSON.parse(localStorage.getItem(type) || "");
+};
+
 const initialState = {
-  cart: [],
+  cart: getDataOnLocalStorage("cart"),
   total_items: 0,
   total_amount: 0,
   shipping_fee: 534,
@@ -44,11 +54,28 @@ export const CartProvider = ({ children }: Props): JSX.Element => {
     });
   };
 
+  // remove item from the cart
+  const removeItem = (id: string) => {};
+
+  // toggle amount of product in user cart
+  const toggleAmount = (id: string, value: number) => {};
+
+  // clear cart / emptied the cart
+  const clearCart = () => {};
+
+  // saving data to user local storage
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cartState.cart));
+  }, [cartState.cart]);
+
   return (
     <CartContext.Provider
       value={{
         ...cartState,
         addToCart,
+        removeItem,
+        toggleAmount,
+        clearCart,
       }}
     >
       {children}
