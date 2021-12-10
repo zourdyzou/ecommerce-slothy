@@ -18,7 +18,12 @@ interface IAddToCartAction {
   };
 }
 
-type Actions = IAddToCartAction;
+interface IRemoveItemAction {
+  type: ActionTypes.REMOVE_CART_ITEM;
+  payload: string;
+}
+
+type Actions = IAddToCartAction | IRemoveItemAction;
 
 const initialState = {
   cart: [],
@@ -74,6 +79,13 @@ const cart_reducer = (state: State = initialState, action: Actions) => {
           { cart: [...state.cart, adding_to_cart] }
         );
       }
+
+    case ActionTypes.REMOVE_CART_ITEM:
+      const temp_filtered_cart = state.cart.filter(
+        (cartItem) => cartItem.id !== action.payload
+      );
+
+      return Object.assign({}, { ...state }, { cart: temp_filtered_cart });
 
     default:
       return state;

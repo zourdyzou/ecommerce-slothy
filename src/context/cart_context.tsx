@@ -55,7 +55,12 @@ export const CartProvider = ({ children }: Props): JSX.Element => {
   };
 
   // remove item from the cart
-  const removeItem = (id: string) => {};
+  const removeItem = (id: string) => {
+    cartDispatch({
+      type: ActionTypes.REMOVE_CART_ITEM,
+      payload: id,
+    });
+  };
 
   // toggle amount of product in user cart
   const toggleAmount = (id: string, value: number) => {};
