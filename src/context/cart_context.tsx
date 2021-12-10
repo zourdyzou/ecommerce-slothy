@@ -66,7 +66,11 @@ export const CartProvider = ({ children }: Props): JSX.Element => {
   const toggleAmount = (id: string, value: number) => {};
 
   // clear cart / emptied the cart
-  const clearCart = () => {};
+  const clearCart = () => {
+    cartDispatch({
+      type: ActionTypes.CLEAR_CART,
+    });
+  };
 
   // saving data to user local storage
   useEffect(() => {

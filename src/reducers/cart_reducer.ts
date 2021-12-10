@@ -23,7 +23,11 @@ interface IRemoveItemAction {
   payload: string;
 }
 
-type Actions = IAddToCartAction | IRemoveItemAction;
+interface IClearCartAction {
+  type: ActionTypes.CLEAR_CART;
+}
+
+type Actions = IAddToCartAction | IClearCartAction | IRemoveItemAction;
 
 const initialState = {
   cart: [],
@@ -86,6 +90,9 @@ const cart_reducer = (state: State = initialState, action: Actions) => {
       );
 
       return Object.assign({}, { ...state }, { cart: temp_filtered_cart });
+
+    case ActionTypes.CLEAR_CART:
+      return Object.assign({}, { ...state }, { cart: [] });
 
     default:
       return state;
