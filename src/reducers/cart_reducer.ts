@@ -27,7 +27,24 @@ interface IClearCartAction {
   type: ActionTypes.CLEAR_CART;
 }
 
-type Actions = IAddToCartAction | IClearCartAction | IRemoveItemAction;
+interface IToggleAmountAction {
+  type: ActionTypes.TOGGLE_CART_ITEM_AMOUNT;
+  payload: {
+    id: string;
+    value: string;
+  };
+}
+
+interface ICountTotalsAction {
+  type: ActionTypes.COUNT_CART_TOTALS;
+}
+
+type Actions =
+  | IAddToCartAction
+  | IToggleAmountAction
+  | IClearCartAction
+  | IRemoveItemAction
+  | ICountTotalsAction;
 
 const initialState = {
   cart: [],
@@ -93,6 +110,57 @@ const cart_reducer = (state: State = initialState, action: Actions) => {
 
     case ActionTypes.CLEAR_CART:
       return Object.assign({}, { ...state }, { cart: [] });
+
+    case ActionTypes.TOGGLE_CART_ITEM_AMOUNT:
+      const { id: current_id, value } = action.payload;
+      const temp_toggle_amount_data = state.cart.map((cartItem) => {
+        if (cartItem.id === current_id) {
+          if (value === "ascending") {
+            let newAmount = cartItem.amount + 1;
+
+            if (newAmount > cartItem.stock_max) {
+              newAmount = cartItem.stock_max;
+            }
+
+            return Object.assign({}, { ...cartItem }, { amount: newAmount });
+          }
+
+          if (value === "descending") {
+            let newAmount = cartItem.amount - 1;
+
+            /**
+             * TODO: when amount hit 0 the product will be automatically get removed
+             */
+            if (newAmount < 1) {
+              newAmount = 1;
+            }
+
+            return Object.assign({}, { ...cartItem }, { amount: newAmount });
+          }
+        }
+
+        return cartItem;
+      });
+
+      return Object.assign({}, { ...state }, { cart: temp_toggle_amount_data });
+
+    case ActionTypes.COUNT_CART_TOTALS:
+      const { total_amount, total_items } = state.cart.reduce(
+        (total, cartItem) => {
+          const { amount, price } = cartItem;
+
+          total.total_amount += amount;
+          total.total_items += price * amount;
+
+          return total;
+        },
+        {
+          total_amount: 0,
+          total_items: 0,
+        }
+      );
+
+      return Object.assign({}, { ...state }, { total_amount, total_items });
 
     default:
       return state;
