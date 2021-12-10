@@ -15,6 +15,9 @@ interface Props {
 
 export const AddToCart: React.FC<Props> = ({ product }) => {
   const { id, stock, colors } = product;
+
+  const { addToCart }: any = useCartContext();
+
   const [mainColour, setMainColour] = useState(colors[0]);
   const [amount, setAmount] = useState<number>(1);
 
@@ -72,7 +75,11 @@ export const AddToCart: React.FC<Props> = ({ product }) => {
           increase={increase}
           decrease={decrease}
         />
-        <Link to={cart} className="btn">
+        <Link
+          to={cart}
+          className="btn"
+          onClick={() => addToCart(id, mainColour, amount, product)}
+        >
           add to cart
         </Link>
       </div>

@@ -8,6 +8,18 @@ interface State {
   shipping_fee: number;
 }
 
+interface IAddToCartAction {
+  type: ActionTypes.ADD_TO_CART;
+  payload: {
+    id: string;
+    color: string;
+    amount: number;
+    product: ProductData;
+  };
+}
+
+type Actions = IAddToCartAction;
+
 const initialState = {
   cart: [],
   total_items: 0,
@@ -15,9 +27,14 @@ const initialState = {
   shipping_fee: 534,
 };
 
-const cart_reducer = (state: State = initialState, action: any) => {
-  return state;
-  // throw new Error(`No Matching "${action.type}" - action type`)
+const cart_reducer = (state: State = initialState, action: Actions) => {
+  switch (action.type) {
+    case ActionTypes.ADD_TO_CART:
+      return Object.assign({}, { ...state }, {});
+
+    default:
+      return state;
+  }
 };
 
 export default cart_reducer;
