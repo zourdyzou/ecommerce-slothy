@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useReducer, createContext } from "react";
 import reducer from "../reducers/cart_reducer";
 import { ActionTypes } from "../types/action-types";
-import { ProductData } from "../types/data-types";
+import { ProductData, SingleProduct } from "../types/data-types";
 
 export interface CartContextType {
   cart: Array<ProductData>;
@@ -31,7 +31,7 @@ export const CartProvider = ({ children }: Props): JSX.Element => {
     id: string,
     color: string,
     amount: number,
-    product: ProductData
+    product: SingleProduct
   ) => {
     cartDispatch({
       type: ActionTypes.ADD_TO_CART,

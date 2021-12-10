@@ -63,3 +63,13 @@ export interface SingleProduct {
   shipping: boolean;
   images: Array<ImageData>;
 }
+
+export interface ICartData {
+  amount: number;
+  color: string;
+  id: string;
+  image: string;
+  stock_max: number;
+  name: string;
+  price: number;
+}
