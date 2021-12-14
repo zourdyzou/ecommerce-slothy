@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const getDataOnLocalStorage = (type: string) => {
-  const cart = localStorage.getItem(type) || "";
+  const cart = localStorage.getItem(type) || [];
 
   if (cart.length === 0) {
     return [];
@@ -37,7 +37,7 @@ export const CartProvider = ({ children }: Props): JSX.Element => {
   const [cartState, cartDispatch] = useReducer(reducer, initialState);
 
   // add to cart
-  const addToCart = (
+  const add_to_cart = (
     id: string,
     color: string,
     amount: number,
@@ -63,7 +63,15 @@ export const CartProvider = ({ children }: Props): JSX.Element => {
   };
 
   // toggle amount of product in user cart
-  const toggleAmount = (id: string, value: string) => {};
+  const toggleAmount = (id: string, value: string) => {
+    cartDispatch({
+      type: ActionTypes.TOGGLE_CART_ITEM_AMOUNT,
+      payload: {
+        id,
+        value,
+      },
+    });
+  };
 
   // clear cart / emptied the cart
   const clearCart = () => {
@@ -84,10 +92,11 @@ export const CartProvider = ({ children }: Props): JSX.Element => {
     <CartContext.Provider
       value={{
         ...cartState,
-        addToCart,
+        add_to_cart,
         removeItem,
         toggleAmount,
         clearCart,
+        cartDispatch,
       }}
     >
       {children}

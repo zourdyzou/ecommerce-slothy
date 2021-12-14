@@ -6,9 +6,50 @@ import { formatPrice } from "../../utils/helpers";
 import { useCartContext } from "../../context/cart_context";
 
 import { AmountButtons } from "../atoms/AmountButtons";
+import { ICartData } from "../../types/data-types";
 
-export const CartItem: React.FC = () => {
-  return <h4>cart item</h4>;
+export const CartItem: React.FC<ICartData> = ({
+  id,
+  image,
+  name,
+  color,
+  price,
+  amount,
+}) => {
+  const { removeItem, toggleAmount }: any = useCartContext();
+
+  const increase = () => {
+    toggleAmount(id, "ascending");
+  };
+
+  const decrease = () => {
+    toggleAmount(id, "descending");
+  };
+
+  return (
+    <Wrapper>
+      <div className="title">
+        <img src={image} alt={name} />
+        <div>
+          <h5 className="name">{name}</h5>
+          <p className="color">
+            color : <span style={{ background: color }}></span>
+          </p>
+          <h5 className="price-small">{formatPrice(price)}</h5>
+        </div>
+      </div>
+      <h5 className="price">{formatPrice(price)}</h5>
+      <AmountButtons amount={amount} increase={increase} decrease={decrease} />
+      <h5 className="subtotal">{formatPrice(price * amount)}</h5>
+      <button
+        type="button"
+        className="remove-btn"
+        onClick={() => removeItem(id)}
+      >
+        <FaTrash />
+      </button>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.article`
@@ -64,7 +105,7 @@ const Wrapper = styled.article`
     }
   }
   .price-small {
-    color: var(--clr-primary-5);
+    color: black;
   }
   .amount-btns {
     width: 75px;

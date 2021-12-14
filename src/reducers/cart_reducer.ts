@@ -40,11 +40,11 @@ interface ICountTotalsAction {
 }
 
 type Actions =
-  | IAddToCartAction
-  | IToggleAmountAction
   | IClearCartAction
   | IRemoveItemAction
-  | ICountTotalsAction;
+  | ICountTotalsAction
+  | IAddToCartAction
+  | IToggleAmountAction;
 
 const initialState = {
   cart: [],

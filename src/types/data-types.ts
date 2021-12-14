@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface ProductData {
   id: string;
   name: string;
@@ -72,4 +74,5 @@ export interface ICartData {
   stock_max: number;
   name: string;
   price: number;
+  children: ReactNode;
 }

@@ -7,9 +7,33 @@ import { useCartContext } from "../../context/cart_context";
 import { CartItem } from "../molecules/CartItem";
 import { CartTotals } from "../molecules/CartTotals";
 import { CartColumns } from "../molecules/CartColumns";
+import { ICartData } from "../../types/data-types";
+import { products } from "../../utils/routes";
 
 export const CartContent: React.FC = () => {
-  return <h4>cart content </h4>;
+  const { cart, clearCart }: any = useCartContext();
+
+  return (
+    <Wrapper className="section section-center">
+      <CartColumns />
+
+      {cart.map((product: ICartData) => {
+        return <CartItem key={product.id} {...product} />;
+      })}
+      <hr />
+
+      <div className="link-container">
+        <Link to={products} className="link-btn">
+          continue shopping
+        </Link>
+
+        <button className="link-btn clear-btn" onClick={clearCart}>
+          clear shopping cart
+        </button>
+      </div>
+      <CartTotals />
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`

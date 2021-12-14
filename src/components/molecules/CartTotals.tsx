@@ -5,9 +5,35 @@ import { Link } from "react-router-dom";
 import { formatPrice } from "../../utils/helpers";
 import { useCartContext } from "../../context/cart_context";
 import { useUserContext } from "../../context/user_context";
+import { checkout } from "../../utils/routes";
 
 export const CartTotals: React.FC = () => {
-  return <h4>cart totals</h4>;
+  const { total_amount, shipping_fee }: any = useCartContext();
+
+  return (
+    <Wrapper>
+      <div>
+        <article>
+          <h5>
+            subtotal : <span>{formatPrice(total_amount)}</span>
+          </h5>
+          <p>
+            shipping fee : <span>{formatPrice(shipping_fee)}</span>
+          </p>
+          <hr />
+
+          <h4>
+            order total :{" "}
+            <span>{formatPrice(total_amount + shipping_fee)}</span>
+          </h4>
+        </article>
+
+        <Link to={checkout} className="btn">
+          proceed to checkout
+        </Link>
+      </div>
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.section`

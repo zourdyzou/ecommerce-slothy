@@ -16,9 +16,9 @@ interface Props {
 export const AddToCart: React.FC<Props> = ({ product }) => {
   const { id, stock, colors } = product;
 
-  const { addToCart }: any = useCartContext();
+  const { add_to_cart }: any = useCartContext();
 
-  const [mainColour, setMainColour] = useState(colors[0]);
+  const [mainColor, setMainColor] = useState(colors[0]);
   const [amount, setAmount] = useState<number>(1);
 
   const increase = () => {
@@ -50,19 +50,19 @@ export const AddToCart: React.FC<Props> = ({ product }) => {
       <div className="colors">
         <span>colors : </span>
         <div>
-          {colors.map((colour, index: number) => {
+          {colors.map((color, index: number) => {
             return (
               <button
                 key={index}
                 style={{
-                  background: colour,
+                  background: color,
                 }}
                 className={`${
-                  mainColour === colour ? "color-btn active" : "color-btn"
+                  mainColor === color ? "color-btn active" : "color-btn"
                 }`}
-                onClick={() => setMainColour(colors[index])}
+                onClick={() => setMainColor(colors[index])}
               >
-                {mainColour === colour ? <FaCheck /> : null}
+                {mainColor === color ? <FaCheck /> : null}
               </button>
             );
           })}
@@ -78,7 +78,7 @@ export const AddToCart: React.FC<Props> = ({ product }) => {
         <Link
           to={cart}
           className="btn"
-          onClick={() => addToCart(id, mainColour, amount, product)}
+          onClick={() => add_to_cart(id, mainColor, amount, product)}
         >
           add to cart
         </Link>

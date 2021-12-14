@@ -8,7 +8,7 @@ import { products } from "../utils/routes";
 export const CartPage: React.FC = () => {
   const { cart }: any = useCartContext();
 
-  if (cart.length < 1) {
+  if (cart.length === 0) {
     return (
       <Wrapper className="page-100">
         <div className="empty">

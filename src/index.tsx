@@ -14,9 +14,11 @@ ReactDOM.render(
   <React.StrictMode>
     <ProductProvider>
       <FilterProvider>
-        <Router>
-          <App />
-        </Router>
+        <CartProvider>
+          <Router>
+            <App />
+          </Router>
+        </CartProvider>
       </FilterProvider>
     </ProductProvider>
   </React.StrictMode>,
