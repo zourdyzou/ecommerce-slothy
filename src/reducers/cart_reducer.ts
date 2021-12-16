@@ -54,6 +54,31 @@ const initialState = {
 };
 
 const cart_reducer = (state: State = initialState, action: Actions) => {
+  function handleAmountTotal(value: string, cartItem: ICartData) {
+    let tempAmount;
+
+    if (value === "ascending") {
+      tempAmount = cartItem.amount + 1;
+
+      if (tempAmount > cartItem.stock_max) {
+        tempAmount = cartItem.stock_max;
+      }
+    }
+
+    if (value === "descending") {
+      tempAmount = cartItem.amount - 1;
+
+      /**
+       * TODO: when amount hit 0 the product will be automatically get removed
+       */
+      if (tempAmount < 1) {
+        tempAmount = 1;
+      }
+    }
+
+    return Object.assign({}, { ...cartItem }, { amount: tempAmount });
+  }
+
   switch (action.type) {
     case ActionTypes.ADD_TO_CART:
       const { amount, color, id, product } = action.payload;
@@ -115,32 +140,12 @@ const cart_reducer = (state: State = initialState, action: Actions) => {
       const { id: current_id, value } = action.payload;
       const temp_toggle_amount_data = state.cart.map((cartItem) => {
         if (cartItem.id === current_id) {
-          if (value === "ascending") {
-            let newAmount = cartItem.amount + 1;
-
-            if (newAmount > cartItem.stock_max) {
-              newAmount = cartItem.stock_max;
-            }
-
-            return Object.assign({}, { ...cartItem }, { amount: newAmount });
-          }
-
-          if (value === "descending") {
-            let newAmount = cartItem.amount - 1;
-
-            /**
-             * TODO: when amount hit 0 the product will be automatically get removed
-             */
-            if (newAmount < 1) {
-              newAmount = 1;
-            }
-
-            return Object.assign({}, { ...cartItem }, { amount: newAmount });
-          }
+          return handleAmountTotal(value, cartItem);
         }
 
         return cartItem;
       });
+      // .filter((item) => item.amount !== 0);
 
       return Object.assign({}, { ...state }, { cart: temp_toggle_amount_data });
 

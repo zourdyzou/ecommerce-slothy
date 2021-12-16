@@ -10,6 +10,7 @@ import { useProductsContext } from "../../context/products_context";
 
 export const CartButtons: React.FC = () => {
   const { sidebarClose }: any = useProductsContext();
+  const { total_amount }: any = useCartContext();
 
   return (
     <Wrapper className="cart-btn-wrapper">
@@ -17,7 +18,7 @@ export const CartButtons: React.FC = () => {
         cart
         <span className="cart-container">
           <FaShoppingCart />
-          <span className="cart-value">12</span>
+          <span className="cart-value">{total_amount}</span>
         </span>
       </Link>
       <button type="button" className="auth-btn">
