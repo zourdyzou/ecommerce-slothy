@@ -8,6 +8,7 @@ import { CheckoutPage } from "./pages/Checkout";
 import { ErrorPage } from "./pages/Error";
 
 import { HomePage } from "./pages/Home";
+import { PrivateRoute } from "./pages/PrivateRoute";
 import { ProductsPage } from "./pages/ProductsPage";
 import { SingleProductPage } from "./pages/SingleProduct";
 
@@ -28,7 +29,9 @@ export const App: React.FC = () => {
           path={routes.single_product}
           children={<SingleProductPage />}
         />
-        <Route exact path={routes.checkout} component={CheckoutPage} />
+        <PrivateRoute exact path={routes.checkout}>
+          <CheckoutPage />
+        </PrivateRoute>
         <Route exact path={routes.error} component={ErrorPage} />
       </Switch>
       <Footer />

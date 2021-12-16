@@ -1,9 +1,21 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import React, { ReactNode } from "react";
+import { Route, Redirect, RouteProps } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-// will remove later
-import { useUserContext } from "../context/user_context";
+import { home } from "../utils/routes";
 
-export const PrivateRoute = () => {
-  return <h4>Private Route</h4>;
+type IProps = {
+  children: ReactNode;
+} & RouteProps;
+
+export const PrivateRoute: React.FC<IProps> = ({ children, ...restProps }) => {
+  const { user } = useAuth0();
+
+  return (
+    <Route
+      {...restProps}
+      render={() => {
+        return user ? children : <Redirect to={home} />;
+      }}
+    />
+  );
 };

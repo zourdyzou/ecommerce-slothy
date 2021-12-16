@@ -19,6 +19,7 @@
     "@types/stripe": "^8.0.417",
     "@types/styled-components": "^5.1.15",
     "axios": "^0.21.1",
+    "concurrently": "^6.4.0",
     "dotenv": "^8.2.0",
     "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
@@ -40,12 +41,6 @@
     "netlify": "netlify dev",
     "dev": "netlify dev"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -62,3 +57,4 @@
     "netlify-cli": "^3.10.1"
   }
 }
+
