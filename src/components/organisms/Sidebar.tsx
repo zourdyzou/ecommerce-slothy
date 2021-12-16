@@ -9,9 +9,12 @@ import { CartButtons } from "../atoms/CartButtons";
 
 // import { useUserContext } from "../../context/user_context";
 import { useProductsContext } from "../../context/products_context";
+import { checkout } from "../../utils/routes";
+import { useUserContext } from "../../context/user_context";
 
 export const Sidebar: React.FC = () => {
   const { sidebarClose, isSidebarOpen }: any = useProductsContext();
+  const { currentUser }: any = useUserContext();
 
   return (
     <Container>
@@ -30,9 +33,11 @@ export const Sidebar: React.FC = () => {
               </li>
             );
           })}
-          <li onClick={sidebarClose}>
-            <Link to={"/checkout"}>checkout</Link>
-          </li>
+          {currentUser ? (
+            <li onClick={sidebarClose}>
+              <Link to={checkout}>checkout</Link>
+            </li>
+          ) : null}
         </ul>
         <CartButtons />
       </aside>

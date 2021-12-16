@@ -11,6 +11,8 @@ import { useProductsContext } from "../../context/products_context";
 export const CartButtons: React.FC = () => {
   const { sidebarClose }: any = useProductsContext();
   const { total_amount }: any = useCartContext();
+  const { logout, loginWithRedirect, currentUser, isLoading }: any =
+    useUserContext();
 
   return (
     <Wrapper className="cart-btn-wrapper">
@@ -21,9 +23,26 @@ export const CartButtons: React.FC = () => {
           <span className="cart-value">{total_amount}</span>
         </span>
       </Link>
-      <button type="button" className="auth-btn">
-        login <FaUserPlus />
-      </button>
+
+      {!isLoading &&
+        (currentUser ? (
+          <button
+            type="button"
+            className="auth-btn"
+            // style={{ display: isLoading ? "none" : "inline-flex" }}
+            onClick={() => logout({ returnTo: window.location.origin })}
+          >
+            logout <FaUserMinus />
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="auth-btn"
+            onClick={() => loginWithRedirect()}
+          >
+            login <FaUserPlus />
+          </button>
+        ))}
     </Wrapper>
   );
 };

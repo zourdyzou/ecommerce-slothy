@@ -9,6 +9,7 @@ import { checkout } from "../../utils/routes";
 
 export const CartTotals: React.FC = () => {
   const { total_amount, shipping_fee }: any = useCartContext();
+  const { currentUser, loginWithRedirect }: any = useUserContext();
 
   return (
     <Wrapper>
@@ -28,9 +29,19 @@ export const CartTotals: React.FC = () => {
           </h4>
         </article>
 
-        <Link to={checkout} className="btn">
-          proceed to checkout
-        </Link>
+        {currentUser ? (
+          <Link to={checkout} className="btn">
+            proceed to checkout
+          </Link>
+        ) : (
+          <button
+            className="btn"
+            type="button"
+            onClick={() => loginWithRedirect()}
+          >
+            login
+          </button>
+        )}
       </div>
     </Wrapper>
   );

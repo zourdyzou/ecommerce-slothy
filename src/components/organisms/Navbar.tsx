@@ -15,7 +15,7 @@ import { useUserContext } from "../../context/user_context";
 
 export const Navbar: React.FC = () => {
   const { sidebarOpen }: any = useProductsContext();
-
+  const { currentUser }: any = useUserContext();
   return (
     <Container>
       <div className="nav-center">
@@ -36,6 +36,12 @@ export const Navbar: React.FC = () => {
               </li>
             );
           })}
+
+          {currentUser ? (
+            <li>
+              <Link to={routes.checkout}>checkout</Link>
+            </li>
+          ) : null}
         </ul>
         <CartButtons />
       </div>

@@ -33,7 +33,7 @@ type User = {
 };
 
 export const UserProvider = ({ children }: Props) => {
-  const { error, loginWithRedirect, logout, user } = useAuth0();
+  const { error, loginWithRedirect, logout, user, isLoading } = useAuth0();
 
   const [currentUser, setCurrentUser] = useState<User>();
 
@@ -41,7 +41,7 @@ export const UserProvider = ({ children }: Props) => {
     setCurrentUser(user as User);
   }, [user]);
 
-  console.log(user);
+  console.log(isLoading, currentUser);
 
   return (
     <UserContext.Provider
@@ -51,6 +51,7 @@ export const UserProvider = ({ children }: Props) => {
         logout,
         loginWithRedirect,
         currentUser,
+        isLoading,
       }}
     >
       {children}
