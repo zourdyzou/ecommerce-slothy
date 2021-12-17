@@ -1,4 +1,4 @@
-FROM node:16-alpine 
+FROM node:16.0-alpine as base 
 
 WORKDIR /ecommerce-furniture
 
@@ -10,10 +10,9 @@ ENV REACT_APP_AUTH0_DOMAIN=$REACT_APP_AUTH0_DOMAIN
 ENV REACT_APP_AUTH0_CLIENT_SECRET=$REACT_APP_AUTH0_CLIENT_SECRET
 ENV REACT_APP_AUTH0_CLIENT_ID=$REACT_APP_AUTH0_CLIENT_ID
 
-COPY . /ecommerce-furniture
-RUN yarn install 
-
+COPY . .
 RUN yarn run build
+
 
 FROM nginx:1.15.2-alpine as release
 RUN apk add --no-cache jq
@@ -22,6 +21,7 @@ RUN apk add --no-cache jq
 COPY --from=base /ecommerce-furniture/build /var/www
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
+EXPOSE 3000
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
