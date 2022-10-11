@@ -1,4 +1,4 @@
-FROM node:16.0-alpine as base 
+FROM node:16.17-alpine as base 
 
 WORKDIR /ecommerce-furniture
 
