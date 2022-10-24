@@ -5,7 +5,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^1.2.0",
     "@stripe/react-stripe-js": "^1.1.2",
-    "@stripe/stripe-js": "^1.11.0",
+    "@stripe/stripe-js": "1.42.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
