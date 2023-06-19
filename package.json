@@ -8,7 +8,7 @@
     "@stripe/stripe-js": "^1.11.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "^11.1.2",
-    "@testing-library/user-event": "^12.2.2",
+    "@testing-library/user-event": "^14.0.0",
     "@types/axios": "^0.14.0",
     "@types/lodash": "4.14.186",
     "@types/lodash.debounce": "^4.0.6",
