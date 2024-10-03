@@ -14,7 +14,7 @@ COPY . .
 RUN yarn run build
 
 
-FROM nginx:1.15.2-alpine as release
+FROM nginx:1.27.2-alpine as release
 RUN apk add --no-cache jq
 
 
